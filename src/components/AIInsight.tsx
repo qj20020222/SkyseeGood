@@ -1,14 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-interface AIInsightProps {
-  title?: string;
-  insight?: string;
+interface query {
+    query: string
 }
 
-const AIInsight: React.FC<AIInsightProps> = ({
-  title = 'AI Insight',
-  insight = 'Analyzing data to provide valuable insights...'
+const AIInsight: React.FC<query> = ({
+    query
 }) => {
   return (
     <View style={styles.container}>

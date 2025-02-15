@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";  // 用于显示箭头图标
-import { SwipeCard } from "@/components/SwipeCard";
+import  SwipeCard  from "@/components/swipe-card";
 import AppSwitcher from "@/components/AppSwitcher";
 import { NewsArticle } from "@/types/newsArticle";
 import { ArrowLeftRight } from "lucide-react";

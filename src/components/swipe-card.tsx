@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import AIInsight from "@/components/AIInsight"
+import AIInsight from './AIInsight';  // 正确
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const DEFAULT_IMAGE = require('./assets/default.png');
 
