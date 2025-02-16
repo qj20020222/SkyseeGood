@@ -60,10 +60,13 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
       ) : (
         cards.slice(0, 3).map((card, index) => (
           <SwipeCard
-            title={card.title}
-            content={card.summary}
+            location = {card.location}
+            company = {card.company}
+            salary = {card.salary}
+            id = {card.id}
+            job={card.job}
+            content={card.description}
             date={card.publishedDate}
-            image={card.image}
             url={card.url}
             isTop={index === 0}
             onSwipe={() => handleSwipe(card.id)}

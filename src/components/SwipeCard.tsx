@@ -22,11 +22,14 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const DEFAULT_IMAGE = require('./assets/default.png');
 
 interface SwipeCardProps {
-  title: string;
+  id:string
+  job: string;
   content: string;
+  salary:string;
+  location:string;
+  company:string;
   onSwipe: (direction: 'left' | 'right') => void;
   date: string;
-  image?: string;
   url: string;
   isTop?: boolean;
   onBack?: () => void;
@@ -34,10 +37,13 @@ interface SwipeCardProps {
 }
 
 const SwipeCard: React.FC<SwipeCardProps> = ({
-  title,
+  id,
+  job,
   content,
+  salary,
+  location,
+  company,
   date,
-  image = DEFAULT_IMAGE,
   url,
   onSwipe,
   onBack,
@@ -93,8 +99,8 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
   );
 
   const getTitleSize = () => {
-    if (title.length <= 40) return 24;
-    if (title.length <= 80) return 20;
+    if (job.length <= 40) return 24;
+    if (job.length <= 80) return 20;
     return 18;
   };
 
@@ -116,7 +122,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
       {/* Image Section */}
       <View style={styles.imageContainer}>
         <Image
-          source={imageError ? DEFAULT_IMAGE : { uri: image }}
+          source={imageError ? DEFAULT_IMAGE : { uri: favicon }}
           style={styles.image}
           resizeMode="cover"
           onError={() => setImageError(true)}
@@ -126,17 +132,12 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
           colors={['rgba(0,0,0,0.8)', 'rgba(0, 0, 0, 0.48)', 'rgba(0,0,0,0.9)']}
           style={styles.gradient}
         />
-
         {/* Source Info */}
         <TouchableOpacity
           style={styles.sourceContainer}
           onPress={() => Linking.openURL(url)}
         >
-          <Image
-            source={{ uri: favicon }}
-            style={styles.favicon}
-            onError={() => setImageError(true)}
-          />
+
           <Text style={styles.hostname}>{hostname}</Text>
         </TouchableOpacity>
 
@@ -149,7 +150,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
             ]}
             numberOfLines={3}
           >
-            {title}
+            {job}
           </Text>
         </View>
       </View>
@@ -160,7 +161,15 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
           {moment(date).format('MMM D')} · {content.slice(0, 370)}
           {content.length > 370 && '...'}
         </Text>
-
+        <Text style={styles.date}>
+           location: {location}
+        </Text>
+        <Text style={styles.date}>
+          salary: {salary}
+        </Text>
+        <Text style={styles.date}>
+           company: {company}
+        </Text>
         <View style={styles.footer}>
           {showBack && (
             <TouchableOpacity style={styles.backButton} onPress={onBack}>
@@ -190,7 +199,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
       >
         <SafeAreaView style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.modalContent}>
-            <AIInsight query = {title}/>
+            <AIInsight query = {id}/>
             <TouchableOpacity
               onPress={() => setSheetOpen(false)}
               style={styles.closeButton}
