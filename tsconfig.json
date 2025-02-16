@@ -1,9 +1,9 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"] // 关键修改：将 @/* 映射到 src/*
+      "@/*": ["./src/*"] // 关键修改：将 @/* 映射到 src/*
     }
   }
 }

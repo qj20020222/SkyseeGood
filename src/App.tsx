@@ -1,6 +1,4 @@
 import NewsFeed from "@/components/feed";
-import { cookies } from "next/headers";
-import { getTopNewsUrl } from "@/modules/utils";
 
 export type NewsArticle = {
   id: string;
@@ -14,13 +12,9 @@ export type NewsArticle = {
 }
 
 export default async function Home() {
-  const cookieStore = await cookies();
-  const followedTopics = cookieStore.get("followedTopics")?.value;
-  const categories = followedTopics && JSON.parse(followedTopics).join(',').toLowerCase();
 
-  const url = getTopNewsUrl(categories);
-  const response = await fetch(url);
-  const newsArticles: NewsArticle[] = await response.json();
+  //const response = await fetch(url);
+  //const newsArticles: NewsArticle[] = await response.json();
 
   return (
     <main className="relative h-screen bg-transparent">

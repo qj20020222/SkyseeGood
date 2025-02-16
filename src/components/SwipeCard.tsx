@@ -190,7 +190,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
       >
         <SafeAreaView style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.modalContent}>
-            <AIInsight query={title} />
+            <AIInsight query = {title}/>
             <TouchableOpacity
               onPress={() => setSheetOpen(false)}
               style={styles.closeButton}

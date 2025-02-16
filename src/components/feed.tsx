@@ -1,8 +1,7 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";  // 用于显示箭头图标
-import  SwipeCard  from "@/components/swipe-card";
+import  SwipeCard  from "@/components/SwipeCard";
 import AppSwitcher from "@/components/AppSwitcher";
 import { NewsArticle } from "@/types/newsArticle";
 import { ArrowLeftRight } from "lucide-react";
@@ -65,7 +64,6 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
             content={card.summary}
             date={card.publishedDate}
             image={card.image}
-            favicon={card.favicon}
             url={card.url}
             isTop={index === 0}
             onSwipe={() => handleSwipe(card.id)}
