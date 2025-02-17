@@ -31,7 +31,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
     // Hide tip after fade animation completes
     setTimeout(() => {
       setShowTip(false);
-      localStorage.setItem('hasSeenSwipeTip', 'true');
+
     }, 500);
   };
 
@@ -51,7 +51,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
           <Text style={styles.tipText}>Swipe cards to explore</Text>
         </View>
       )}
-
+      
       {cards.length === 0 ? (
         <View style={styles.noCards}>
           <Text style={styles.noCardsText}>All Caught Up!</Text>
@@ -60,7 +60,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
       ) : (
         cards.slice(0, 3).map((card, index) => (
           <SwipeCard
-          key={card.id}
+            key={card.id}
             location = {card.location}
             company = {card.company}
             salary = {card.salary}

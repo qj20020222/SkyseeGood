@@ -4,7 +4,7 @@
  *
  * @format
  */
-import  Home  from "./src/App"
+import  Home  from "./src/Home"
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -57,8 +57,9 @@ function Section({children, title}: SectionProps): React.JSX.Element {
  
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
+  console.log('Current mode is:', isDarkMode ? 'Dark' : 'Light');
   const backgroundStyle = {
+    flex:1,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 

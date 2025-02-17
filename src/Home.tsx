@@ -67,12 +67,12 @@ export default function Home(){
  "context": "你因该掌握..."
 }   
   ]
-
+  console.log('correct')
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <View style={styles.scrollView}>
         <NewsFeed newsArticles={newsArticles} />
-      </ScrollView>
+      </View>
     </View>
   );
 }
