@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
-import  {LinearGradient}  from 'expo-linear-gradient';
+//import  {LinearGradient}  from 'expo-linear-gradient';
 import AIInsight from './AIInsight';  // 正确
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 import { URL } from 'react-native-url-polyfill';
@@ -127,11 +127,11 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
           onError={() => setImageError(true)}
         />
         
-        <LinearGradient
+        {/*<LinearGradient
           colors={['rgba(0,0,0,0.8)', 'rgba(0, 0, 0, 0.48)', 'rgba(0,0,0,0.9)']}
           style={styles.gradient}
-          
-        />
+ 
+        />*/}
         {/* Source Info */}
         <TouchableOpacity
           style={styles.sourceContainer}
@@ -183,12 +183,6 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
             onPress={() => () => setSheetOpen(true)}
           >
             <Text style={styles.aiButtonText}>AI Insights</Text>
-            <LinearGradient
-              colors={['#FF3366', '#8B5CF6', '#0EA5E9']}
-              style={styles.gradientIcon}
-            >
-              <Icon name="insights" size={20} color="white" />
-            </LinearGradient>
           </TouchableOpacity>
         </View>
       </ScrollView>

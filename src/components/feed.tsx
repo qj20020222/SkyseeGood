@@ -12,13 +12,13 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
   const [showTip, setShowTip] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const hasSeenTip = localStorage.getItem('hasSeenSwipeTip');
     if (!hasSeenTip) {
       setShowTip(true);
       localStorage.setItem('hasSeenSwipeTip', 'true');
     }
-  }, []);
+  }, []);*/
 
   const handleSwipe = (id: string) => {
     const dismissedCard = cards.find(card => card.id === id);
@@ -60,6 +60,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
       ) : (
         cards.slice(0, 3).map((card, index) => (
           <SwipeCard
+          key={card.id}
             location = {card.location}
             company = {card.company}
             salary = {card.salary}
