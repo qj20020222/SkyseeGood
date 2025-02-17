@@ -16,11 +16,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
-import { LinearGradient } from 'expo-linear-gradient';
+import  {LinearGradient}  from 'expo-linear-gradient';
 import AIInsight from './AIInsight';  // 正确
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const DEFAULT_IMAGE = require('./assets/default.png');
-
+import { URL } from 'react-native-url-polyfill';
 interface SwipeCardProps {
   id:string
   job: string;
@@ -122,7 +121,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
       {/* Image Section */}
       <View style={styles.imageContainer}>
         <Image
-          source={imageError ? DEFAULT_IMAGE : { uri: favicon }}
+          source={{ uri: favicon }}
           style={styles.image}
           resizeMode="cover"
           onError={() => setImageError(true)}
@@ -131,6 +130,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
         <LinearGradient
           colors={['rgba(0,0,0,0.8)', 'rgba(0, 0, 0, 0.48)', 'rgba(0,0,0,0.9)']}
           style={styles.gradient}
+          
         />
         {/* Source Info */}
         <TouchableOpacity
