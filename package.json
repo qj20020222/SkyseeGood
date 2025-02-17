@@ -21,7 +21,8 @@
     "react-native-typescript-transformer": "^1.2.13",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
-    "react-swipeable": "^7.0.2"
+    "react-swipeable": "^7.0.2",
+    "save-dev": "^0.0.1-security"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",

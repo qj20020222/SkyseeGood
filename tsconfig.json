@@ -1,9 +1,7 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "composite": true,      // 新增
-    "declaration": true,    // 新增
-    "emitDeclarationOnly": false,
+    
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"] // 关键修改：将 @/* 映射到 src/*
