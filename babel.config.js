@@ -18,6 +18,9 @@ module.exports = {
         ],
         alias: {
           '@': './src',
+          '@components': './src/components',
+          '@screens': './src/screens',
+           '@types': './src/types'
         },
       },
     ],
