@@ -114,6 +114,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
   };
 
   return (
+  <>
     <Animated.View
       style={[styles.cardContainer, cardStyle]}
       {...panResponder.panHandlers}
@@ -158,7 +159,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
       {/* Content Section */}
       <ScrollView style={styles.contentContainer}>
         <Text style={styles.date}>
-          {moment(date).format('MMM D')} · {content.slice(0, 370)}
+          {date} · {content.slice(0, 370)}
           {content.length > 370 && '...'}
         </Text>
         <Text style={styles.date}>
@@ -180,37 +181,42 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
 
           <TouchableOpacity
             style={styles.aiButton}
-            onPress={() => () => setSheetOpen(true)}
+            onPress={() =>setSheetOpen(true)}
           >
             <Text style={styles.aiButtonText}>AI Insights</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Modal
+    </Animated.View>
+    <Modal
         visible={sheetOpen}
         animationType="slide"
+        transparent={true}
         onRequestClose={() => setSheetOpen(false)}
       >
         <SafeAreaView style={styles.modalContainer}>
-          <ScrollView contentContainerStyle={styles.modalContent}>
-            <AIInsight query = {id}/>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>标题</Text>   
+            <ScrollView>
+              <AIInsight query={id} />
+            </ScrollView>
             <TouchableOpacity
               onPress={() => setSheetOpen(false)}
               style={styles.closeButton}
             >
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={styles.closeButtonText}>关闭</Text>
             </TouchableOpacity>
-          </ScrollView>
+          </View>
         </SafeAreaView>
       </Modal>
-    </Animated.View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
     width: SCREEN_WIDTH * 0.9,
-    height: SCREEN_HEIGHT * 0.7,
+    height: SCREEN_HEIGHT * 0.8,
     backgroundColor: 'white',
     borderRadius: 16,
     overflow: 'hidden',
@@ -312,9 +318,26 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: "#fff",
+    marginTop: 'auto',  // 让模态框从底部弹出
+    height: '80%',      // 设置高度为屏幕的80%
+    borderTopLeftRadius: 20,  // 顶部圆角
+    borderTopRightRadius: 20,
+    shadowColor: "#000",  // 添加阴影
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,       // Android阴影
   },
   modalContent: {
+    backgroundColor: '#FFFFFF', // 确保内容区域有白色背景
+    marginTop: 'auto', // 推到底部
     padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    minHeight: 300, // 给一个最小高度
   },
   closeButton: {
     marginTop: 20,

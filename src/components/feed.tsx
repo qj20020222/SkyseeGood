@@ -5,7 +5,10 @@ import  SwipeCard  from "@/components/SwipeCard";
 import AppSwitcher from "@/components/AppSwitcher";
 import { NewsArticle } from "@/types/newsArticle";
 import { ArrowLeftRight } from "lucide-react";
-
+import {
+  Dimensions,
+} from 'react-native';
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[] }) {
   const [cards, setCards] = useState(newsArticles);
   const [dismissedCards, setDismissedCards] = useState<NewsArticle[]>([]);
@@ -44,42 +47,54 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
   };
 
   return (
-  <>
-    <View style={styles.container}>
-      {showTip && cards.length > 0 && (
-        <View style={styles.tip}>
-          <Text style={styles.tipText}>Swipe cards to explore</Text>
-        </View>
-      )}
-      
-      {cards.length === 0 ? (
-        <View style={styles.noCards}>
-          <Text style={styles.noCardsText}>All Caught Up!</Text>
-          <Text>You have caught up with all news for now.</Text>
-        </View>
-      ) : (
-        cards.slice(0, 3).map((card, index) => (
-          <SwipeCard
+<>
+  <View style={styles.container}>
+    {showTip && cards.length > 0 && (
+      <View style={styles.tip}>
+        <Text style={styles.tipText}>Swipe cards to explore</Text>
+      </View>
+    )}
+    
+    {cards.length === 0 ? (
+      <View style={styles.noCards}>
+        <Text style={styles.noCardsText}>All Caught Up!</Text>
+        <Text>You have caught up with all news for now.</Text>
+      </View>
+    ) : (
+      <View style={styles.cardsContainer}>
+        {cards.slice(0, 3).map((card, index) => (
+          <View 
             key={card.id}
-            location = {card.location}
-            company = {card.company}
-            salary = {card.salary}
-            id = {card.id}
-            job={card.job}
-            content={card.description}
-            date={card.publishedDate}
-            url={card.url}
-            isTop={index === 0}
-            onSwipe={() => handleSwipe(card.id)}
-            onBack={handleUndo}
-            showBack={index === 0 && dismissedCards.length > 0}
-          />
-        ))
-      )}
-    </View>
-    <AppSwitcher />
-  </>
-
+            style={[
+              styles.cardWrapper,
+              {
+                position: 'absolute',
+                zIndex: 2 - index,  // 最前面的卡片 zIndex 最大
+                elevation: 2 - index  // Android 层叠效果
+              }
+            ]}
+          >
+            <SwipeCard
+              location={card.location}
+              company={card.company}
+              salary={card.salary}
+              id={card.id}
+              job={card.job}
+              content={card.description}
+              date={card.publishedDate}
+              url={card.url}
+              isTop={index === 0}
+              onSwipe={() => handleSwipe(card.id)}
+              onBack={handleUndo}
+              showBack={index === 0 && dismissedCards.length > 0}
+            />
+          </View>
+        ))}
+      </View>
+    )}
+  </View>
+  <AppSwitcher />
+</>
   );
 }
 
@@ -89,6 +104,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
     paddingHorizontal: 10,
+    position: 'relative',
   },
   tip: {
     position: 'absolute',
@@ -156,4 +172,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
+  cardsContainer: {
+    flex: 1,
+    position: 'relative', // 用于定位子元素
+  },
+  
+  cardWrapper: {
+    width: '100%',
+    position: 'absolute', // 绝对定位
+    left: 0,
+    right: 0,
+  }
 });
