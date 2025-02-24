@@ -39,7 +39,7 @@ export const FIND_ALL_ARTICLES = gql`
 // 根据主题查找文章
 export const FIND_BY_TOPIC = gql`
   query FindByTopic($string: String!, $skip: Int, $take: Int) {
-    findbytopic(string: $string, skip: $skip, take: $take) {
+    findbytopic(string: $string) {
       _id
       topics
       publishedDate

@@ -6,50 +6,22 @@ import { FIND_BY_TOPIC } from './services/graphql/news/Apollo';
 
 
 export default function Home(){
-  //const response = await fetch(url);
-  //const newsArticles: NewsArticle[] = await response.json();
-/* React.useEffect(() => {
-      const fetchData = async () => {
-          // Simulate cookie retrieval (React Native uses AsyncStorage)
-          // In a real app, you'd use AsyncStorage.getItem('followedTopics')
-          const cookieStore = { get: (key: string) => ({ value: localStorage.getItem(key) }) }; // Simulate for now
-          const followedTopicsValue = cookieStore.get("followedTopics")?.value;
-          setFollowedTopics(followedTopicsValue || ""); // Set initial state
-
-          const categories = followedTopicsValue && JSON.parse(followedTopicsValue).join(',').toLowerCase();
-          const url = getTopNewsUrl(categories);
-
-          try {
-              const response = await fetch(url);
-              const data: NewsArticle[] = await response.json();
-              setNewsArticles(data);
-          } catch (error) {
-              console.error("Error fetching news:", error);
-              // Handle error appropriately (e.g., show error message)
-          }
-      };
-
-      fetchData();
-  }, []); // Run only once on mount */
-  
-  
-
   console.log('correct')
 
   const { loading, error, data, fetchMore } = useQuery(FIND_BY_TOPIC, {
-    variables: { string:'Java',  skip:0, take:200 },
+    variables: { string:'Java'},
     onError: (err) => {
       console.log('完整错误对象:', err);
       console.log('网络错误详情:', err.networkError);}
   });
 
-  if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 
-  if (error) return <View style={styles.container}><Text>Error: {error.message}</Text></View>; //
+  //if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 
+  //if (error) return <View style={styles.container}><Text>Error: {error.message}</Text></View>; //
   
   return (
     <View style={styles.container}>
       <View style={styles.scrollView}>
-        <NewsFeed newsArticles={data} />
+      <NewsFeed newsArticles={data ? data.newsArticles || [] : []} />
       </View>
     </View>
   );
