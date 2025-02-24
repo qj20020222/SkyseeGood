@@ -1,8 +1,11 @@
 import NewsFeed from "@/components/feed";
 import { NewsArticle } from "./types/newsArticle";
-import { View, StyleSheet, ScrollView } from 'react-native';
-export default function Home(){
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { useQuery } from '@apollo/client';
+import { FIND_BY_TOPIC } from './services/graphql/news/Apollo';
 
+
+export default function Home(){
   //const response = await fetch(url);
   //const newsArticles: NewsArticle[] = await response.json();
 /* React.useEffect(() => {
@@ -68,6 +71,14 @@ export default function Home(){
 }   
   ]
   console.log('correct')
+
+  const { loading, error, data, fetchMore } = useQuery(FIND_BY_TOPIC, {
+    variables: { string:'java',  skip:0, take:20 },
+  });
+
+  if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 
+  if (error) return <View style={styles.container}><Text>Error: {error.message}</Text></View>; //
+  
   return (
     <View style={styles.container}>
       <View style={styles.scrollView}>

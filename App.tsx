@@ -16,7 +16,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
+import client from "@/services/graphql/apolloClient";
 import {
   Colors,
   DebugInstructions,
@@ -24,7 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
+import { ApolloProvider } from '@apollo/client';
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -32,6 +32,7 @@ type SectionProps = PropsWithChildren<{
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
+  <ApolloProvider client={client}>
     <View style={styles.sectionContainer}>
       <Text
         style={[
@@ -52,6 +53,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         {children}
       </Text>
     </View>
+    </ApolloProvider>
   );
 }
  

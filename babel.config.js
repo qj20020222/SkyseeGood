@@ -20,7 +20,8 @@ module.exports = {
           '@': './src',
           '@components': './src/components',
           '@pages': './src/pages',
-          '@types': './src/types'
+          '@types': './src/types',
+          '@services': './src/services'
         },
       },
     ],
