@@ -32,48 +32,12 @@ export default function Home(){
       fetchData();
   }, []); // Run only once on mount */
   
+  
 
-  const newsArticles: NewsArticle[] = [
- {
- "id": '0',
- "publishedDate": "2024/JAN/10",
- "url": 'https://www.zhipin.com',
- "job": "Software Engineer",
- "company": "Google",  
- "location": "Mountain View, CA",    
- "salary": "150,000",     
- "description": "Develops software applications for Google products.",
- "context": "你因该掌握..."
-},
-      
-{
- "id": '1',    
- "publishedDate": "2024/JAN/10",
- "url": 'https://www.zhipin.com',
- "job": "Software Engineer",
- "company": "Facebook",  
- "location": "Menlo Park, CA",
- "salary": "140,000",
- "description": "Develops software applications for Facebook products.",
-  "context": "你因该掌握..."
- },
-      
-{
- "id": '2',
- "publishedDate": "2024/JAN/10",
- "url": 'https://www.zhipin.com',
- "job": "Software Engineer",
- "company": "Amazon",
- "location": "Seattle, WA",   
- "salary": "130,000",     
- "description": "Develops software applications for Amazon products." ,   
- "context": "你因该掌握..."
-}   
-  ]
   console.log('correct')
 
   const { loading, error, data, fetchMore } = useQuery(FIND_BY_TOPIC, {
-    variables: { string:'java',  skip:0, take:20 },
+    variables: { string:'Java',  skip:0, take:200 },
   });
 
   if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 
@@ -82,7 +46,7 @@ export default function Home(){
   return (
     <View style={styles.container}>
       <View style={styles.scrollView}>
-        <NewsFeed newsArticles={newsArticles} />
+        <NewsFeed newsArticles={data} />
       </View>
     </View>
   );

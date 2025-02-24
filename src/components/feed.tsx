@@ -24,8 +24,8 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
   }, []);*/
 
   const handleSwipe = (id: string) => {
-    const dismissedCard = cards.find(card => card.id === id);
-    setCards((cards) => cards.filter((card) => card.id !== id));
+    const dismissedCard = cards.find(card => card._id === id);
+    setCards((cards) => cards.filter((card) => card._id !== id));
     if (dismissedCard) {
       setDismissedCards(prev => [dismissedCard, ...prev]);
     }
@@ -64,7 +64,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
       <View style={styles.cardsContainer}>
         {cards.slice(0, 3).map((card, index) => (
           <View 
-            key={card.id}
+            key={card._id}
             style={[
               styles.cardWrapper,
               {
@@ -78,13 +78,13 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
               location={card.location}
               company={card.company}
               salary={card.salary}
-              id={card.id}
+              id={card._id}
               job={card.job}
               content={card.description}
               date={card.publishedDate}
               url={card.url}
               isTop={index === 0}
-              onSwipe={() => handleSwipe(card.id)}
+              onSwipe={() => handleSwipe(card._id)}
               onBack={handleUndo}
               showBack={index === 0 && dismissedCards.length > 0}
             />

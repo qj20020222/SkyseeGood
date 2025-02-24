@@ -1,5 +1,5 @@
 export type NewsArticle = {
-    id: string;
+    _id: string;
     publishedDate: string;
     job: string;
     url: string;
@@ -7,5 +7,6 @@ export type NewsArticle = {
     location:string;
     description:string;
     salary:string;
-    company:string
+    company:string;
+    topics:[string]
 }
