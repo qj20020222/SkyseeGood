@@ -38,6 +38,9 @@ export default function Home(){
 
   const { loading, error, data, fetchMore } = useQuery(FIND_BY_TOPIC, {
     variables: { string:'Java',  skip:0, take:200 },
+    onError: (err) => {
+      console.log('完整错误对象:', err);
+      console.log('网络错误详情:', err.networkError);}
   });
 
   if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 

@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 export const FIND_ARTICLE_BY_ID = gql`
   query FindArticleById($id: String!) {
     findArticlebyid(id: $id) {
-      id
+      _id
       topics
       publishedDate
       job
@@ -22,7 +22,7 @@ export const FIND_ARTICLE_BY_ID = gql`
 export const FIND_ALL_ARTICLES = gql`
   query FindAllArticles($skip: Int, $take: Int) {  # 假设你有分页参数
     findall(skip: $skip, take: $take) {
-      id
+      _id
       topics
       publishedDate
       job
@@ -40,7 +40,16 @@ export const FIND_ALL_ARTICLES = gql`
 export const FIND_BY_TOPIC = gql`
   query FindByTopic($string: String!, $skip: Int, $take: Int) {
     findbytopic(string: $string, skip: $skip, take: $take) {
+      _id
       topics
+      publishedDate
+      job
+      url
+      context
+      location
+      description
+      salary
+      company
     }
   }
 `;
@@ -49,7 +58,7 @@ export const FIND_BY_TOPIC = gql`
 export const ADD_ARTICLE = gql`
   mutation AddArticle($newinputdata: NewsArticleInput!) {
     addArticle(newinputdata: $newinputdata) {
-      id
+      _id
       topics
       publishedDate
       job
@@ -66,7 +75,7 @@ export const ADD_ARTICLE = gql`
 // 删除文章
 export const REMOVE_ARTICLE = gql`
   mutation RemoveArticle($id: String!) {
-    removeArticle(id: $id)
+    removeArticle(_id: $id)
   }
 `;
 
@@ -74,7 +83,7 @@ export const REMOVE_ARTICLE = gql`
 export const RECIPE_ADDED_SUBSCRIPTION = gql`
   subscription RecipeAdded {
     recipeAdded {
-      id
+      _id
     }
   }
 `;

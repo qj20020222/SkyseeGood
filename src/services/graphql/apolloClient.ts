@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context'; // 用于添加认证头 (可选)
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3000/graphql', // 你的 GraphQL 服务器地址.  必须!
+  uri: 'http://10.0.2.2:3000/graphql', // 你的 GraphQL 服务器地址.  必须!
 });
 
 // (可选) 添加认证头.  如果你的 API 不需要认证，可以完全删除 authLink

@@ -32,7 +32,7 @@ type SectionProps = PropsWithChildren<{
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
-  <ApolloProvider client={client}>
+  
     <View style={styles.sectionContainer}>
       <Text
         style={[
@@ -53,7 +53,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         {children}
       </Text>
     </View>
-    </ApolloProvider>
+    
   );
 }
  
@@ -66,6 +66,7 @@ function App(): React.JSX.Element {
   };
 
   return (
+  <ApolloProvider client={client}>
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -73,6 +74,7 @@ function App(): React.JSX.Element {
       />
       <Home/>
     </SafeAreaView>
+  </ApolloProvider>
   );
 }
 
