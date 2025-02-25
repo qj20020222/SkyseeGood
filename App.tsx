@@ -66,16 +66,19 @@ function App(): React.JSX.Element {
   };
 
   return (
+  <>
+    <StatusBar
+    barStyle={'light-content'}
+    backgroundColor={'#1D2235'} // 使用变量
+    translucent={true} // 允许内容延伸到状态栏下方
+   />
   <ApolloProvider client={client}>
     <SafeAreaView style={{...backgroundStyle, paddingTop: 0}}>
-     <StatusBar
-        barStyle={'light-content'}
-        backgroundColor='#1D2235'
-        translucent={true}
-      />
+
       <Home/>
     </SafeAreaView>
   </ApolloProvider>
+  </>
   );
 }
 

@@ -33,7 +33,7 @@ export default function Home(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent', // Or your desired background color
+    backgroundColor: '#1D2235', // Or your desired background color
     paddingTop: 20, // Adjust for status bar
   },
   scrollView: {

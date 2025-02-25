@@ -107,7 +107,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0', // 设置背景颜色
+    backgroundColor: '#1D2235', // 设置背景颜色
     paddingTop: 20, // 添加顶部内边距,
   },
   tip: {
