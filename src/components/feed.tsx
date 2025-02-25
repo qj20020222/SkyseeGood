@@ -69,7 +69,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
               styles.cardWrapper,
               {
                 zIndex:3- index,// 最前面的卡片 zIndex 最大
-                elevation: 3 - index,
+                elevation: 0,
                 //opacity: index === 2 ? 0.3 : 1,
                 //width: `${100 - (index * 4)}%`,
                 //marginHorizontal: 'auto',  // Android 层叠效果
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   cardWrapper: {
     position: 'absolute',
     width: '90%',
-
+    borderColor: 'transparent',
     right: 0,
     padding: 10, // 添加内边距
     alignSelf: 'center',

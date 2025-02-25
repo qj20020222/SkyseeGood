@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#666666'
+    backgroundColor: '#555555'
   },
   date: {
     color: '#FFFFFF',
