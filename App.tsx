@@ -62,15 +62,16 @@ function App(): React.JSX.Element {
   console.log('Current mode is:', isDarkMode ? 'Dark' : 'Light');
   const backgroundStyle = {
     flex:1,
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: '#1D2235',
   };
 
   return (
   <ApolloProvider client={client}>
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <SafeAreaView style={{...backgroundStyle, paddingTop: 0}}>
+     <StatusBar
+        barStyle={'light-content'}
+        backgroundColor='#1D2235'
+        translucent={true}
       />
       <Home/>
     </SafeAreaView>

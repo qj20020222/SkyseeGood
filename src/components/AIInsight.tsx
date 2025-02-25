@@ -10,7 +10,7 @@ const AIInsight: React.FC<AIInsightProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{query}</Text>
+      <Text style={styles.title}>{query.replace(/\*/g, '')}</Text>
       <View style={styles.divider} />
     </View>
   );

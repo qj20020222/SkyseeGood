@@ -14,9 +14,9 @@ import {
   Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
 import moment from 'moment';
-import { StepBack } from "lucide-react"
+import Feather from 'react-native-vector-icons/Feather';
 import AIInsight from './AIInsight';  // 正确
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 import { URL } from 'react-native-url-polyfill';
@@ -33,6 +33,7 @@ interface SwipeCardProps {
   isTop?: boolean;
   onBack?: () => void;
   showBack?: boolean;
+  context:string
 }
 
 const SwipeCard: React.FC<SwipeCardProps> = ({
@@ -48,6 +49,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
   onBack,
   isTop = false,
   showBack = false,
+  context
 }) => {
   const [exitAnim] = useState(new Animated.Value(0));
   const [transform] = useState({
@@ -169,16 +171,54 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
         <View style={styles.footer}>
           {showBack && (
             <TouchableOpacity style={styles.backButton} onPress={onBack}>
-              <Icon name="chevron-back" size={24} color="white" />
+              <Feather name="skip-back" size={24} color="#D3D3D3" />
+              <Text style={{ marginLeft: 5, color: '#D3D3D3' }}>Back</Text>
             </TouchableOpacity>
           )}
-
-          <TouchableOpacity
-            style={styles.aiButton}
-            onPress={() =>setSheetOpen(true)}
+      <TouchableOpacity
+        onPress={() => {
+        setSheetOpen(true);
+      }}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 4,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        marginLeft: 'auto', 
+      }}
+    >
+      <Text style={{ marginRight: 6, color :'white'}}>AI Insights</Text>
+      <Svg
+        width={14}
+        height={14}
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <Defs>
+          <LinearGradient
+            id="ai-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
           >
-            <Text style={styles.aiButtonText}>AI Insights</Text>
-          </TouchableOpacity>
+           <Stop offset="0%" stopColor="#A7F3D0" /> 
+           <Stop offset="50%" stopColor="#6EE7B7" /> 
+           <Stop offset="100%" stopColor="#10B981" />
+          </LinearGradient>
+        </Defs>
+        <Path
+          d="M12 3l1.912 5.813a2 2 0 001.272 1.272L21 12l-5.813 1.912a2 2 0 00-1.272 1.272L12 21l-1.912-5.813a2 2 0 00-1.272-1.272L3 12l5.813-1.912a2 2 0 001.272-1.272L12 3z"
+          stroke="url(#ai-gradient)"
+          fill="url(#ai-gradient)" 
+        />
+      </Svg>
+    </TouchableOpacity>
         </View>
       </ScrollView>
     </Animated.View>
@@ -192,7 +232,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
           <View style={styles.modalContent}>
             <Text style={styles.title}>标题</Text>   
             <ScrollView>
-              <AIInsight query={id} />
+              <AIInsight query={context} />
             </ScrollView>
             <TouchableOpacity
               onPress={() => setSheetOpen(false)}

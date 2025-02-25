@@ -92,6 +92,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
               onSwipe={() => handleSwipe(card._id)}
               onBack={handleUndo}
               showBack={index === 0 && dismissedCards.length > 0}
+              context={card.context}
             />
           </View>
         ))}
@@ -180,13 +181,17 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     alignItems: 'center', // 用于定位子元素
+    //justifyContent: 'center', // 添加这一行
+     width: '100%'
   },
   
   cardWrapper: {
     position: 'absolute',
-    width: '100%',
-    //left: 0,
-    //right: 0,
+    width: '90%',
+
+    right: 0,
     padding: 10, // 添加内边距
+    alignSelf: 'center',
+    left: '2.5%', // 添加这一行，与width配合确保居中
   }
 });
