@@ -20,7 +20,7 @@ export const FIND_ARTICLE_BY_ID = gql`
 
 // 查找所有文章
 export const FIND_ALL_ARTICLES = gql`
-  query FindAllArticles($skip: Int, $take: Int) {  # 假设你有分页参数
+  query FindAllArticles($skip: Int!, $take: Int!) {  # 假设你有分页参数
     findall(skip: $skip, take: $take) {
       _id
       topics
@@ -38,8 +38,10 @@ export const FIND_ALL_ARTICLES = gql`
 
 // 根据主题查找文章
 export const FIND_BY_TOPIC = gql`
-  query FindByTopic($string: String!, $skip: Int, $take: Int) {
-    findbytopic(string: $string) {
+  query FindByTopic($topic: String!, $skip: Int!,  
+    $take: Int!) {
+    findbytopic(topic: $topic, skip: $skip,
+      take: $take) {
       _id
       topics
       publishedDate
