@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Animated } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import { Ionicons } from "@expo/vector-icons";  // 用于显示箭头图标
 import  SwipeCard  from "@/components/SwipeCard";
 import AppSwitcher from "@/components/AppSwitcher";
@@ -14,7 +14,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
   const [dismissedCards, setDismissedCards] = useState<NewsArticle[]>([]);
   const [showTip, setShowTip] = useState(false);
   const [isFading, setIsFading] = useState(false);
-
+  console.log("Inside NewsFeed, cards:", cards);
   /*useEffect(() => {
     const hasSeenTip = localStorage.getItem('hasSeenSwipeTip');
     if (!hasSeenTip) {
@@ -48,7 +48,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
 
   return (
 <>
-  <View style={styles.container}>
+  <View style={styles.container}> 
     {showTip && cards.length > 0 && (
       <View style={styles.tip}>
         <Text style={styles.tipText}>Swipe cards to explore</Text>
@@ -62,15 +62,20 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
       </View>
     ) : (
       <View style={styles.cardsContainer}>
-        {cards.slice(0, 3).map((card, index) => (
+        {cards.map((card, index) => (
           <View 
             key={card._id}
             style={[
               styles.cardWrapper,
               {
-                position: 'absolute',
-                zIndex: 2 - index,  // 最前面的卡片 zIndex 最大
-                elevation: 2 - index  // Android 层叠效果
+                zIndex:3- index,// 最前面的卡片 zIndex 最大
+                elevation: 3 - index,
+                //opacity: index === 2 ? 0.3 : 1,
+                //width: `${100 - (index * 4)}%`,
+                //marginHorizontal: 'auto',  // Android 层叠效果
+                transform: [
+                  { translateY: index * 8 },  // 添加缩放效果
+                ],
               }
             ]}
           >
@@ -83,7 +88,7 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
               content={card.description}
               date={card.publishedDate}
               url={card.url}
-              isTop={index === 0}
+              isTop= {true}
               onSwipe={() => handleSwipe(card._id)}
               onBack={handleUndo}
               showBack={index === 0 && dismissedCards.length > 0}
@@ -101,13 +106,11 @@ export default function NewsFeed({ newsArticles }: { newsArticles: NewsArticle[]
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    paddingBottom: 10,
-    paddingHorizontal: 10,
-    position: 'relative',
+    backgroundColor: '#f0f0f0', // 设置背景颜色
+    paddingTop: 20, // 添加顶部内边距,
   },
   tip: {
-    position: 'absolute',
+    position: 'relative',
     top: '40%',
     left: '50%',
     transform: [{ translateX: -50 }, { translateY: -50 }],
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   card: {
+    position: 'relative',
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 15,
@@ -174,13 +178,15 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     flex: 1,
-    position: 'relative', // 用于定位子元素
+    position: 'relative',
+    alignItems: 'center', // 用于定位子元素
   },
   
   cardWrapper: {
+    position: 'absolute',
     width: '100%',
-    position: 'absolute', // 绝对定位
-    left: 0,
-    right: 0,
+    //left: 0,
+    //right: 0,
+    padding: 10, // 添加内边距
   }
 });

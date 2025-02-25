@@ -14,9 +14,9 @@ import {
   Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-//import  {LinearGradient}  from 'expo-linear-gradient';
+import { StepBack } from "lucide-react"
 import AIInsight from './AIInsight';  // 正确
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 import { URL } from 'react-native-url-polyfill';
@@ -105,7 +105,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
 
   const hostname = new URL(url).hostname.replace(/^www\./, '');
   const favicon = `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
-
+  const imageurl = 'https://w.wallhaven.cc/full/5g/wallhaven-5g9ed8.png'
   const cardStyle = {
     transform: [
       { translateX: exitAnim || transform.x },
@@ -122,17 +122,12 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
       {/* Image Section */}
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: favicon }}
+          source={{ uri: imageurl }}
           style={styles.image}
           resizeMode="cover"
           onError={() => setImageError(true)}
         />
-        
-        {/*<LinearGradient
-          colors={['rgba(0,0,0,0.8)', 'rgba(0, 0, 0, 0.48)', 'rgba(0,0,0,0.9)']}
-          style={styles.gradient}
- 
-        />*/}
+
         {/* Source Info */}
         <TouchableOpacity
           style={styles.sourceContainer}
@@ -141,8 +136,11 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
 
           <Text style={styles.hostname}>{hostname}</Text>
         </TouchableOpacity>
+      </View>
 
-        {/* Title Section */}
+      {/* Content Section */}
+      <ScrollView style={styles.contentContainer}>
+        <Text style={{color:'white'}}>{date}</Text>
         <View style={styles.titleContainer}>
           <Text
             style={[
@@ -154,12 +152,9 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
             {job}
           </Text>
         </View>
-      </View>
-
-      {/* Content Section */}
-      <ScrollView style={styles.contentContainer}>
-        <Text style={styles.date}>
-          {date} · {content.slice(0, 370)}
+        <Text style={styles.date}
+        adjustsFontSizeToFit={true}>
+          {content.slice(0, 370)}
           {content.length > 370 && '...'}
         </Text>
         <Text style={styles.date}>
@@ -174,8 +169,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
         <View style={styles.footer}>
           {showBack && (
             <TouchableOpacity style={styles.backButton} onPress={onBack}>
-              <Icon name="arrow-back" size={24} color="#666" />
-              <Text style={styles.buttonText}>Back</Text>
+              <Icon name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
           )}
 
@@ -216,7 +210,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
 const styles = StyleSheet.create({
   cardContainer: {
     width: SCREEN_WIDTH * 0.9,
-    height: SCREEN_HEIGHT * 0.8,
+    height: SCREEN_HEIGHT * 0.7,
     backgroundColor: 'white',
     borderRadius: 16,
     overflow: 'hidden',
@@ -225,9 +219,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 4,
+    
   },
   imageContainer: {
-    flex: 1,
+    height: 250,
     position: 'relative',
   },
   image: {
@@ -261,8 +256,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   titleContainer: {
-    position: 'absolute',
-    bottom: 0,
+    //position: 'absolute',
+    top: 0,             // 改为顶部
     left: 0,
     right: 0,
     padding: 24,
@@ -270,17 +265,19 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontWeight: '600',
+    fontWeight: '900',
   },
   contentContainer: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#666666'
   },
   date: {
-    color: '#666',
+    color: '#FFFFFF',
     fontSize: 14,
-    marginBottom: 16,
-  },
+    marginBottom: 16,      
+    fontWeight: '700',  // 限制行数 // 超出显示...
+},
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -69,7 +69,7 @@ function App(): React.JSX.Element {
   <ApolloProvider client={client}>
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <Home/>

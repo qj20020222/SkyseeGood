@@ -4,7 +4,6 @@ import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { FIND_BY_TOPIC } from './services/graphql/news/Apollo';
 
-
 export default function Home(){
   console.log('correct')
 
@@ -19,11 +18,13 @@ export default function Home(){
 
   if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 
   if (error) return <View style={styles.container}><Text>Error: {error.message}</Text></View>; //
-  
+
+  console.log("NewsFeed 之前的数据:", data);
+  console.log("Before passing to NewsFeed, data.newsArticles:", data.findbytopic);
   return (
     <View style={styles.container}>
       <View style={styles.scrollView}>
-      <NewsFeed newsArticles={data ? data.newsArticles || [] : []} />
+      <NewsFeed newsArticles={data.findbytopic || []} />
       </View>
     </View>
   );
