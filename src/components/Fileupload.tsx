@@ -88,7 +88,7 @@ export function FileUpload() {
       });
   
       try {
-        const response = await axios.post('http://10.0.2.2:3000/graphql/upload', formData, {
+        const response = await axios.post('http://10.0.2.2:3000/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Accept': 'application/json',
@@ -96,6 +96,7 @@ export function FileUpload() {
         });
         const { path, mimetype } = response.data.file;
         setUploadedFilePath(path);
+        console.log('upload path:', uploadedFilePath);
         setUploadedFileMimeType(mimetype);
         setStatus('success!');
         console.log('upload result:', response.data);
