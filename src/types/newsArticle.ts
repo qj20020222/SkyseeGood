@@ -8,5 +8,8 @@ export type NewsArticle = {
     description:string;
     salary:string;
     company:string;
-    topics:string[]
+    topics:string[];
+    original_contex: string;
+    boss_info:string;
+    keywords:string
 }

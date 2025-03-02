@@ -6,26 +6,31 @@ import { FIND_ARTICLE_BY_ID, FIND_BY_TOPIC } from './services/graphql/news/Apoll
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 
-export default async function Home(){
+export default function Home(){ // 移除 async
   const[loading, setLoading] = useState(true);
   const [articles, setArticles] = useState<any[]>([]);
   const [error, setError] = useState(null);
+  const [values, setValues] = useState([]);
 
   console.log('correct')
 
-  const getAllValues = async () => {
-    try {
-      const dataJson = await AsyncStorage.getItem('my-key');
-      if (dataJson) {
-        return JSON.parse(dataJson);
+  // 获取存储的值
+  useEffect(() => {
+    const getAllValues = async () => {
+      try {
+        const dataJson = await AsyncStorage.getItem('my-key');
+        if (dataJson) {
+          setValues(JSON.parse(dataJson));
+        }
+      } catch (e) {
+        console.error('读取数据失败', e);
+        setValues([]);
       }
-      return [];
-    } catch (e) {
-      console.error('读取数据失败', e);
-      return [];
-    }
-  };
-  const values = await getAllValues();
+    };
+    
+    getAllValues();
+  }, []);
+
 
  useEffect(()=>{
   let isMounted = true;
