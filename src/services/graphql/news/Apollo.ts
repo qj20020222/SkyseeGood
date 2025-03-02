@@ -89,3 +89,12 @@ export const RECIPE_ADDED_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const GET_ARTICLE_BY_CV = gql`
+    query FindbyCV ($filepath: String!, $filetype: String!) {
+      findbyCV(filepath: $filepath, filetype: $filetype) {
+          _id
+      }
+    }
+`;
+

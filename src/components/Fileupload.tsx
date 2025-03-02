@@ -1,13 +1,45 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import axios from 'axios'
 import { Button, Text, View, Alert } from 'react-native';
 import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker';
-function FileUpload() {
+import { useQuery } from '@apollo/client';
+import { GET_ARTICLE_BY_CV } from '@/services/graphql/news/Apollo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export function FileUpload() {
     const [file, setFile] = useState<DocumentPickerResponse | null>(null);
     const [status, setStatus] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [Loading, setLoading] = useState(false);
     const [uploadedFilePath, setUploadedFilePath] = useState<string | null>(null);
     const [uploadedFileMimeType, setUploadedFileMimeType] = useState<string | null>(null);
+
+    const { loading, error, data } = useQuery(GET_ARTICLE_BY_CV, {
+      variables: { 
+        filepath: uploadedFilePath, 
+        filetype: uploadedFileMimeType 
+      },
+      skip: !uploadedFilePath || !uploadedFileMimeType, // 当条件不满足时跳过查询
+      onError: (err) => {
+        console.log('完整错误对象:', err);
+        console.log('网络错误详情:', err.networkError);
+      }
+    });
+
+    useEffect(() => {
+      if (data && data.findbyCV) {
+        const updateStoredIds = async () => {
+          try {
+            const idValues = data.findbyCV.map((item: { _id: any }) => item._id);
+            await AsyncStorage.setItem('my-key', JSON.stringify(idValues));
+            console.log('ID 列表已成功更新到 AsyncStorage');
+          } catch (e) {
+            console.error('保存 ID 列表失败:', e);
+          }
+        };
+        
+        updateStoredIds();
+      }
+    }, [data]); 
 
     const handleFilePick = async () => {
       try {
@@ -28,7 +60,6 @@ function FileUpload() {
         }
       }
     };
-
 
     const handleSubmit = async () => {
       if (!file) {
@@ -77,6 +108,7 @@ function FileUpload() {
       }
     };
 
+
     return (
       <View style={{ padding: 20 }}>
         <Button title="choose your file" onPress={handleFilePick} />
@@ -86,7 +118,7 @@ function FileUpload() {
           </Text>
         )}
         <Button 
-          title={loading ? "loading..." : "upload it"} 
+          title={Loading ? "loading..." : "upload it"} 
           onPress={handleSubmit} 
           disabled={loading || !file} 
         />
