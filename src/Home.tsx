@@ -1,18 +1,38 @@
 import NewsFeed from "@/components/feed";
 import { NewsArticle } from "./types/newsArticle";
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
-import { useQuery } from '@apollo/client';
-import { FIND_ARTICLE_BY_ID, FIND_BY_TOPIC } from './services/graphql/news/Apollo';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { FIND_ARTICLE_BY_ID, FIND_BY_ID_ARRAY, FIND_BY_TOPIC } from './services/graphql/news/Apollo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
+import AppSwitcher from "@/components/AppSwitcher";
+//import { useQueries } from '@apollo/client';
 
-export default function Home(){ // 移除 async
-  const[loading, setLoading] = useState(true);
+export default function Home(){ 
   const [articles, setArticles] = useState<any[]>([]);
-  const [error, setError] = useState(null);
   const [values, setValues] = useState([]);
-
+  const [dataJson, setdataJson] = useState<string[]>([]);
   console.log('correct')
+  
+  const { loading, error, data,refetch } = useQuery(FIND_BY_ID_ARRAY, {
+    variables: {ids: values},
+    skip:values.length == 0,
+    onError: (err) => {
+      console.log('完整错误对象:', err);
+      console.log('网络错误详情:', err.networkError);
+    }
+  })
+
+  console.log(values)
+  console.log(data)
+
+  useEffect(() => {
+    if (values.length > 0) {
+      refetch({ ids: values }).then(result => {
+        console.log("重新获取数据结果:", result);
+      });
+    }
+  }, [values, refetch]);
 
   // 获取存储的值
   useEffect(() => {
@@ -21,6 +41,10 @@ export default function Home(){ // 移除 async
         const dataJson = await AsyncStorage.getItem('my-key');
         if (dataJson) {
           setValues(JSON.parse(dataJson));
+          //setdataJson(dataJson);
+          console.log("主页读取了", dataJson)
+        } else {
+          setValues([])
         }
       } catch (e) {
         console.error('读取数据失败', e);
@@ -31,56 +55,19 @@ export default function Home(){ // 移除 async
     getAllValues();
   }, []);
 
-
- useEffect(()=>{
-  let isMounted = true;
-  const fetchArticles = async () => {
-    try{    
-      const articles = [];
-      for (let i = 0; i < values.length; i++) {
-      const id = values[i];
-      const { loading, error, data} = useQuery(FIND_ARTICLE_BY_ID, {
-      variables: { topic:id, skip:0, take:300
-      },
-      onError: (err) => {
-        console.log('完整错误对象:', err);
-        console.log('网络错误详情:', err.networkError);}  
-      })
-    if (isMounted) {
-      articles.push(data.findArticlebyid)
-    }
-  } 
-    if (isMounted) {
-      setArticles(articles);
-      setLoading(false);
-    }  
-  } catch (err) {
-    const e =err as any;
-    console.log('完整错误对象:', e);
-    console.log('网络错误详情:', e.networkError);
-    if (isMounted) {
-      setError(e);
-      setLoading(false);
-    }
-  }
-  };
-  fetchArticles();
-  return () => {
-  isMounted = false;
-};
-
-}, [values])
-
-
-
   if (loading) return <View style={styles.container}><Text>Loading...</Text></View>; 
-  if (error) return <View style={styles.container}><Text>Error: {error}</Text></View>; //
+  if (error) return <View style={styles.container}><Text>Error</Text></View>; //
 
-  console.log("Before passing to NewsFeed, data.newsArticles:", articles);
+
   return (
     <View style={styles.container}>
       <View style={styles.scrollView}>
-      <NewsFeed newsArticles={articles || []} />
+      {data && data.findidarray ? (
+        <NewsFeed newsArticles={data.findidarray || []} />
+      ) : (
+        <Text style={styles.messageText}>Upload your CV First!</Text>
+      )}
+      <AppSwitcher/>
       </View>
     </View>
   );
@@ -94,6 +81,12 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+  },
+  messageText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
   },
 });
 

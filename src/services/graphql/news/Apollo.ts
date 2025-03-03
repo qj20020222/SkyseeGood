@@ -91,10 +91,27 @@ export const RECIPE_ADDED_SUBSCRIPTION = gql`
 `;
 
 export const GET_ARTICLE_BY_CV = gql`
-    query FindbyCV ($filepath: String!, $filetype: String!) {
-      findbyCV(filepath: $filepath, filetype: $filetype) {
+    query FindbyCV ($filename: String!, $filetype: String!) {
+      findbyCV(filename: $filename, filetype: $filetype) {
           _id
       }
     }
+`;
+
+export const FIND_BY_ID_ARRAY = gql`
+        query Findidarray ($ids: [String!]!) {
+            findidarray(ids: $ids){
+                  _id
+                  topics
+                  publishedDate
+                  job
+                  url
+                  context
+                  location
+                  description
+                  salary
+                  company             
+            }
+        }
 `;
 

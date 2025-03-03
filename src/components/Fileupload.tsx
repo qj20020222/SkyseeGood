@@ -12,10 +12,12 @@ export function FileUpload() {
     const [Loading, setLoading] = useState(false);
     const [uploadedFilePath, setUploadedFilePath] = useState<string | null>(null);
     const [uploadedFileMimeType, setUploadedFileMimeType] = useState<string | null>(null);
+    const [uploadurl, setuploadurl] =  useState<string | null>(null);
+    const [filename, setfilename] = useState<string | null>(null);
 
     const { loading, error, data } = useQuery(GET_ARTICLE_BY_CV, {
       variables: { 
-        filepath: uploadedFilePath, 
+        filename: filename, 
         filetype: uploadedFileMimeType 
       },
       skip: !uploadedFilePath || !uploadedFileMimeType, // 当条件不满足时跳过查询
@@ -94,21 +96,22 @@ export function FileUpload() {
             'Accept': 'application/json',
           },
         });
-        const { path, mimetype } = response.data.file;
+        const { url, path, mimetype, filename} = response.data.file;
         setUploadedFilePath(path);
         console.log('upload path:', uploadedFilePath);
         setUploadedFileMimeType(mimetype);
+        setuploadurl(url);
+        setfilename(filename)
         setStatus('success!');
         console.log('upload result:', response.data);
       } catch (error) {
         const e = error as any
         const errorMsg = e.response?.data?.message || e.message;
-        setStatus(`upload failed: ${errorMsg}`);
+        //setStatus(`upload failed: ${errorMsg}`);
       } finally {
         setLoading(false);
       }
     };
-
 
     return (
       <View style={{ padding: 20 }}>
@@ -134,9 +137,7 @@ export function FileUpload() {
         )}
       </View>
     );
-
-
-    }
+  }
 
     
 
