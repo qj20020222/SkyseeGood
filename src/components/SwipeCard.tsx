@@ -156,8 +156,7 @@ const SwipeCard: React.FC<SwipeCardProps> = ({
         </View>
         <Text style={styles.date}
         adjustsFontSizeToFit={true}>
-          {content.slice(0, 370)}
-          {content.length > 370 && '...'}
+          {content}
         </Text>
         <Text style={styles.date}>
            location: {location}

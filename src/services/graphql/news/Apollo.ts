@@ -93,14 +93,14 @@ export const RECIPE_ADDED_SUBSCRIPTION = gql`
 export const GET_ARTICLE_BY_CV = gql`
     query FindbyCV ($filename: String!, $filetype: String!) {
       findbyCV(filename: $filename, filetype: $filetype) {
-          _id
+          url
       }
     }
 `;
 
-export const FIND_BY_ID_ARRAY = gql`
-        query Findidarray ($ids: [String!]!) {
-            findidarray(ids: $ids){
+export const FIND_BY_URL_ARRAY = gql`
+        query Findbyurlarray ($urls: [String!]!) {
+            findurlarray(urls: $urls){
                   _id
                   topics
                   publishedDate

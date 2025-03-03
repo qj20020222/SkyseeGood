@@ -31,7 +31,7 @@ export function FileUpload() {
       if (data && data.findbyCV) {
         const updateStoredIds = async () => {
           try {
-            const idValues = data.findbyCV.map((item: { _id: any }) => item._id);
+            const idValues = data.findbyCV.map((item: { url: any }) => item.url);
             await AsyncStorage.setItem('my-key', JSON.stringify(idValues));
             console.log('ID 列表已成功更新到 AsyncStorage');
           } catch (e) {
